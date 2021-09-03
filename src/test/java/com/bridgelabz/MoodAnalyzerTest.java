@@ -6,14 +6,15 @@ import org.junit.jupiter.api.Test;
 public class MoodAnalyzerTest {
 
     @Test
-    void givenMessage_WhenContainsSAD_ShouldReturnSAD() {
-        try {
-            String mood = new MoodAnalyzer("Sad").analyseMood();
-            Assertions.assertEquals("SAD", mood);
+    void givenMessage_WhenContainsSAD_ShouldReturnSAD() throws MoodAnalysisException {
+        String mood = new MoodAnalyzer("Sad").analyseMood();
+        Assertions.assertEquals("SAD", mood);
+    }
 
-        } catch (MoodAnalysisException e) {
-            e.printStackTrace();
-        }
+    @Test
+    void givenMessage_WhenInAnyMood_ShouldReturnHappy() throws MoodAnalysisException {
+        String mood = new MoodAnalyzer("Happy").analyseMood();
+        Assertions.assertEquals("HAPPY", mood);
     }
 
     @Test
@@ -22,7 +23,19 @@ public class MoodAnalyzerTest {
             new MoodAnalyzer(null).analyseMood();
 
         } catch (MoodAnalysisException e) {
-            e.printStackTrace();
+            Assertions.assertEquals(MoodAnalysisException.ExceptionType.ENTERED_NULL,e.type);
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Test
+    void givenMessage_WhenEmpty_ShouldReturnProperMessageToUser() {
+        try {
+            new MoodAnalyzer("").analyseMood();
+
+        } catch (MoodAnalysisException e) {
+            Assertions.assertEquals(MoodAnalysisException.ExceptionType.ENTERED_EMPTY, e.type);
+            System.out.println(e.getMessage());
         }
     }
 }
