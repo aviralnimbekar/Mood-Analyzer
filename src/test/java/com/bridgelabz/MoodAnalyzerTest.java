@@ -20,7 +20,7 @@ public class MoodAnalyzerTest {
     @Test
     void givenMessage_WhenNull_ShouldReturnProperMessageToUser() {
         try {
-            new MoodAnalyzer(null).analyseMood();
+            new MoodAnalyzer().analyseMood();
 
         } catch (MoodAnalysisException e) {
             Assertions.assertEquals(MoodAnalysisException.ExceptionType.ENTERED_NULL,e.type);
